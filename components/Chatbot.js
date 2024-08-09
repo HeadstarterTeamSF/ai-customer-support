@@ -71,19 +71,19 @@ export default function Chatbot() {
 
 
     return (
-        <div class="flex flex-col h-screen w-full max-w-2xl mx-auto bg-background text-foreground">
-        <header class="sticky top-0 z-10 bg-background border-b px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center gap-2">
+        <div className="flex flex-col h-screen w-full max-w-2xl mx-auto bg-background text-foreground">
+        <header className="sticky top-0 z-10 bg-background border-b px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-2">
             <div>
-                <div class="font-medium">Customer Support Assistant</div>
-                <div class="text-xs text-muted-foreground">Online</div>
+                <div className="font-medium">Customer Support Assistant</div>
+                <div className="text-xs text-muted-foreground">Online</div>
             </div>
             </div>
         </header>
-        <div class="flex-1 overflow-auto p-4 space-y-4">
+        <div className="flex-1 overflow-auto p-4 space-y-4">
             {messages.map((message, index) => (
-                <div key={index} class={message.role==='assistant' ? 'flex items-start gap-4': 'flex items-start gap-4 justify-end'}>
-                    <div class={message.role==='assistant' ? 'bg-card p-3 rounded-lg max-w-[80%] text-sm bg-gray-200' : 'bg-primary text-primary-foreground p-3 rounded-lg max-w-[80%] text-sm bg-gray-700 text-white'}>
+                <div key={index} className={message.role==='assistant' ? 'flex items-start gap-4': 'flex items-start gap-4 justify-end'}>
+                    <div className={message.role==='assistant' ? 'bg-card p-3 rounded-lg max-w-[80%] text-sm bg-gray-200' : 'bg-primary text-primary-foreground p-3 rounded-lg max-w-[80%] text-sm bg-gray-700 text-white'}>
                         <div dangerouslySetInnerHTML={{ __html: marked.parse(message.content) }}
                         ></div>
                     </div>
@@ -91,15 +91,15 @@ export default function Chatbot() {
             ))}
             <div ref={messagesEndRef}></div>
         </div>
-        <div class="sticky bottom-0 bg-background border-t px-4 py-3 flex items-center gap-2">
+        <div className="sticky bottom-0 bg-background border-t px-4 py-3 flex items-center gap-2">
             <textarea
-            class="flex w-full bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex-1 min-h-[40px] rounded-2xl resize-none p-2 border border-neutral-400 shadow-sm"
+            className="flex w-full bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex-1 min-h-[40px] rounded-2xl resize-none p-2 border border-neutral-400 shadow-sm"
             placeholder="Type your message..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             ></textarea>
             <button
-            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-800 hover:bg-gray-700 text-white text-primary-foreground hover:bg-primary/90 w-8 h-8"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-800 hover:bg-gray-700 text-white text-primary-foreground hover:bg-primary/90 w-8 h-8"
             type="submit"
             onClick={sendMessage}
             >
@@ -110,15 +110,15 @@ export default function Chatbot() {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="w-4 h-4"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4"
             >
                 <path d="m5 12 7-7 7 7"></path>
                 <path d="M12 19V5"></path>
             </svg>
-            <span class="sr-only">Send</span>
+            <span className="sr-only">Send</span>
             </button>
         </div>
         </div>
