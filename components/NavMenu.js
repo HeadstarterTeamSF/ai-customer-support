@@ -35,7 +35,7 @@ export default function NavMenu() {
         setDropdownOpen(false);
     };
     return (
-        <nav className="bg-blue-600 p-4 flex justify-between items-center">
+        <nav className="fixed top-0 left-0 right-0 bg-blue-600 p-4 flex justify-between items-center">
             <div className="text-white text-xl font-bold">
                 Customer Support Assistant
             </div>
