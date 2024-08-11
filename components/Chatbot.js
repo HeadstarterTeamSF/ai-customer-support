@@ -1,15 +1,26 @@
 "use client"
 import { useState, useEffect, useRef } from 'react';
 import { marked } from 'marked';
+import { useSession } from 'next-auth/react';
+import { createMessage } from '../app/db/createMessage';
 
-export default function Chatbot() {
-
+export default function Chatbot({ name, conversationId, prevMessages }) {
+  // format prev messages
+  const prevMessagesFormatted = prevMessages.map(message => {
+    return {
+      role: message.sender,
+      content: message.messageText.replace(/\\n/g, '\n')
+    }
+  })
+  
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: "Hi! I'm the Headstarter support assistant. How can I help you today?",
+      content: `Hello${name ? ` ${name.split(' ')[0]}` : ''}! I'm Link, your AI conversation partner here to help you master a new language. To get started, just let me know which language you'd like to practice and the scenario you'd like to explore in our conversation.`,
     },
+    ...prevMessagesFormatted
   ])
+
   const [message, setMessage] = useState('')
   const messagesEndRef = useRef(null);
 
@@ -20,6 +31,10 @@ export default function Chatbot() {
 
   const sendMessage = async () => {
     setMessage('') // Clear the input field
+
+    // if user session, store message
+    if (conversationId) await createMessage(conversationId, message, 'user')
+
     setMessages((messages) => [
       ...messages,
       { role: 'user', content: message }, // Add the user's message
@@ -64,6 +79,8 @@ export default function Chatbot() {
 
     // Start reading the response stream
     const finalMarkdown = await reader.read().then(processText)
+    // if user session, store result
+    if (conversationId) await createMessage(conversationId, result, 'assistant')
 
     // If needed, handle the final parsed markdown result
     // For example, update the state or do something else with finalMarkdown
@@ -75,8 +92,8 @@ export default function Chatbot() {
       <header className="sticky top-0 z-10 bg-background border-b px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div>
-            <div className="font-medium">Customer Support Assistant</div>
-            <div className="text-xs text-muted-foreground">Online</div>
+            <div className="font-medium italic">LingoLink</div>
+            <div className="text-xs text-muted-foreground text-green-500">Online</div>
           </div>
         </div>
       </header>
