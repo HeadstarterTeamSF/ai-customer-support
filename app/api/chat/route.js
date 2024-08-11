@@ -22,7 +22,7 @@ When having a practice conversation with a user, your response should always be 
 export async function POST(req) {
     const openai = new OpenAI(process.env.OPENAI_API_KEY);
     const data = await req.json();
-    console.log(data)
+    // console.log(data)
 
     const completion = await openai.chat.completions.create({
         model: "gpt-4o",
