@@ -35,9 +35,9 @@ export default function NavMenu() {
         setDropdownOpen(false);
     };
     return (
-        <nav className="fixed top-0 left-0 right-0 bg-blue-600 p-4 flex justify-between items-center">
+        <nav className="fixed top-0 left-0 right-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-4 flex justify-between items-center">
             <div className="text-white text-xl font-bold">
-                Customer Support Assistant
+                LingoLink
             </div>
             <div>
                 {session ? (

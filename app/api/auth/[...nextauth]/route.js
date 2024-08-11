@@ -1,11 +1,13 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 // import CredentialsProvider from "next-auth/providers/credentials";
-import { db, auth } from "@/firebaseConfig";
-import { getDocs, doc, query, setDoc, deleteDoc, getDoc } from "firebase/firestore";
+import { db, auth, usersRef } from "@/firebaseConfig";
+import { getDocs, doc, query, setDoc, deleteDoc, getDoc, where } from "firebase/firestore";
 import { getAuth, signInWithCredential, GoogleAuthProvider } from "firebase/auth";
 
-const handler = NextAuth({
+
+    
+    export const authOptions = {
     // Configure one or more authentication providers
     providers: [
         GoogleProvider({
@@ -77,10 +79,25 @@ const handler = NextAuth({
         },
         async session({ session, token, user }) {
             // Optionally, pass Firebase UID or other data to the session object
-            session.user.uid = user?.uid;
+            // get user from firestore by email
+            const userDocs = await getDocs(query(usersRef, where("email", "==", session.user.email)));
+            if (userDocs.empty) {
+                return session;
+            }
+            const userDoc = userDocs.docs[0].data();
+            session.user.uid = userDoc?.uid;
             return session;
         },
+        // async jwt({ token, account, profile }) {
+        //     console.log('jwt', token, account, profile);
+        //     if (account && profile) {
+        //         token.id = profile.sub; // or account.id_token, depending on your setup
+        //     }
+        //     return token;
+        // },
     }
-})
+}
+
+const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
